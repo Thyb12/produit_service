@@ -28,7 +28,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run Behave tests with coverage
-        run: coverage run -m behave feature
+        run: coverage run -m behave feature/produit_api.feature
 
       - name: Generate coverage report
         run: coverage xml
