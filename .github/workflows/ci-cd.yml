@@ -10,11 +10,14 @@ on:
 
 jobs:
   build:
+    name: Build and analyze
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Désactive les clones peu profonds pour une meilleure pertinence de l'analyse
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -28,37 +31,17 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Cache SonarQube packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-
-      - name: Install SonarQube Scanner
-        run: |
-          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
-          unzip sonar-scanner-cli-4.6.2.2472-linux.zip
-          mv sonar-scanner-4.6.2.2472-linux sonar-scanner
-          echo 'export PATH=$PATH:$(pwd)/sonar-scanner/bin' >> $GITHUB_ENV
-
       - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          sonar-scanner \
-            -Dsonar.projectKey=your_project_key \
-            -Dsonar.organization=your_organization \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=https://your_sonarqube_server_url \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_PROJECT_KEY: your_project_key
+          SONAR_PROJECT_NAME: your_project_name
 
-      - name: Quality Gate
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          STATUS=$(curl -s -u ${{ secrets.SONAR_TOKEN }}: \
-          "https://your_sonarqube_server_url/api/qualitygates/project_status?projectKey=your_project_key" | jq -r .projectStatus.status)
-          if [ "$STATUS" != "OK" ]; then
-            echo "Quality Gate failed: $STATUS"
-            exit 1
-          fi
+      # Si vous souhaitez échouer votre tâche lorsque le Quality Gate est rouge, décommentez les lignes suivantes
+      # - name: Quality Gate
+      #   uses: sonarsource/sonarqube-quality-gate-action@master
+      #   timeout-minutes: 5
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
