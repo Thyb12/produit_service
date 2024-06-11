@@ -1,3 +1,15 @@
-[run]
-omit =
-    steps/produit_steps.py
+[tox]
+envlist = py39
+skipsdist = True
+
+[testenv]
+deps =
+    Behave
+commands =
+    coverage run -m Behave
+    coverage xml
+
+[coverage:run]
+relative_files = True
+source = api/
+branch = True
