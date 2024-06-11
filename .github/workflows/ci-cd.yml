@@ -27,15 +27,14 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Change to tests directory
+        run: cd tests
 
       - name: Run Behave tests with coverage
-        run: cd tests && coverage run -m behave
+        run: coverage run -m behave
 
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-          distribution: 'adopt'
+      - name: Generate coverage report
+        run: coverage xml
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
@@ -44,3 +43,4 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_PROJECT_KEY: your_project_key
           SONAR_PROJECT_NAME: your_project_name
+          EXTRA_ARGS: '-Dsonar.coverage.reportPaths=coverage.xml'
