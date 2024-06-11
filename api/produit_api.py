@@ -24,6 +24,8 @@ def get_db(env: str = "prod"):
     engine = get_engine(env)
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     db = SessionLocal()
+    if env == "prod":
+        Base.metadata.create_all(bind=engine)
     try:
         yield db
     finally:
