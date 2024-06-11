@@ -25,21 +25,25 @@ jobs:
           python-version: '3.9'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          python -m pip install --upgrade pip
+          pip install coverage
+          pip install coverage-cobertura
+          pip install -r requirements.txt
 
       - name: Run Behave tests with coverage
         run: coverage run -m behave features
 
       - name: Generate coverage report
         run: |
-            coverage report -m
-            coverage json
+          coverage report -m
+          coverage xml -o coverage.xml
 
-      - name: Check xml cat
+      - name: Check coverage files
         run: |
-            ls
-            echo --------------------------------
-            cat coverage.json
+          ls
+          echo "--------------------------------"
+          cat coverage.xml
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
@@ -48,3 +52,6 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_PROJECT_KEY: your_project_key
           SONAR_PROJECT_NAME: your_project_name
+        with:
+          args: >
+            -Dsonar.python.coverage.reportPaths=coverage.xml
