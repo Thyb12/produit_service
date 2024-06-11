@@ -36,7 +36,9 @@ jobs:
             coverage xml
 
       - name: Check xml cat
-        run: cat coverage.xml
+        run: |
+            ls
+            cat coverage.xml
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
