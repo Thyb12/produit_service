@@ -7,6 +7,7 @@ WORKDIR /app
 # Copier les fichiers requis dans le conteneur
 COPY requirements.txt .
 COPY app/produit_api.py /app/produit_api.py
+COPY tests /app/tests
 
 # Installer les dépendances Python
 RUN pip install --no-cache-dir -r requirements.txt
