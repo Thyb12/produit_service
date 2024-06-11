@@ -38,17 +38,6 @@ jobs:
           coverage report -m
           coverage json
           coverage xml
-          cat coverage.json
-          cat coverage.xml
-
-      - name: Convert JSON to XML
-        run: python convert_coverage.py
-
-      - name: Check coverage files
-        run: |
-          ls
-          echo "--------------------------------"
-          cat coverage.xml
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
