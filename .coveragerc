@@ -1,0 +1,3 @@
+[run]
+omit =
+    steps/produit_steps.py
