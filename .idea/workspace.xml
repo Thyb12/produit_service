@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="120e888f-a46f-4bab-81db-740f1b2b4b29" name="Changes" comment="fix api et init Docker">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/ci-cd.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="120e888f-a46f-4bab-81db-740f1b2b4b29" name="Changes" comment="fix sonar scans" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -81,7 +78,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1718103496839</updated>
-      <workItem from="1718103498568" duration="3394000" />
+      <workItem from="1718103498568" duration="3868000" />
     </task>
     <task id="LOCAL-00001" summary="Init produit_service">
       <option name="closed" value="true" />
@@ -115,7 +112,23 @@
       <option name="project" value="LOCAL" />
       <updated>1718106314141</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="init Github Action et SonarQube">
+      <option name="closed" value="true" />
+      <created>1718107195625</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1718107195625</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fix sonar scans">
+      <option name="closed" value="true" />
+      <created>1718107475236</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1718107475236</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -147,7 +160,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Init produit_service" />
     <MESSAGE value="fix api et init Docker" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix api et init Docker" />
+    <MESSAGE value="init Github Action et SonarQube" />
+    <MESSAGE value="fix sonar scans" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix sonar scans" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/produit_service$produit_api.coverage" NAME="produit_api Coverage Results" MODIFIED="1718104697429" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
