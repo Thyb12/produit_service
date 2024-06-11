@@ -27,11 +27,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Change to tests directory
-        run: cd tests
-
       - name: Run Behave tests with coverage
-        run: coverage run -m behave
+        run: coverage run -m behave feature
 
       - name: Generate coverage report
         run: coverage xml
