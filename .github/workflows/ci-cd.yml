@@ -33,6 +33,9 @@ jobs:
       - name: Generate coverage report
         run: coverage xml
 
+      - name: Check root directory contents
+        run: ls
+
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
         env:
