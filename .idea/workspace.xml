@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="120e888f-a46f-4bab-81db-740f1b2b4b29" name="Changes" comment="coverage des tests">
+    <list default="true" id="120e888f-a46f-4bab-81db-740f1b2b4b29" name="Changes" comment="fix docker et l'execution de l'api et tests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/produit_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/produit_api.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -359,7 +357,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718136963853</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="fix docker et l'execution de l'api et tests">
+      <option name="closed" value="true" />
+      <created>1718139530759</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1718139530759</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -397,7 +403,8 @@
     <MESSAGE value="fix Dockerfile pour exec les tests" />
     <MESSAGE value="fix cicd pour exec les tests" />
     <MESSAGE value="coverage des tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="coverage des tests" />
+    <MESSAGE value="fix docker et l'execution de l'api et tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix docker et l'execution de l'api et tests" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/produit_service$behave.coverage" NAME="behave Coverage Results" MODIFIED="1718129482042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/steps" />
