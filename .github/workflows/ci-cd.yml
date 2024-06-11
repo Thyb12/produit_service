@@ -30,9 +30,6 @@ jobs:
           pip install coverage
           pip install -r requirements.txt
 
-      - name: Run Behave tests
-        run: behave features
-
       - name: Run Behave tests with coverage
         run: coverage run -m behave features
 
