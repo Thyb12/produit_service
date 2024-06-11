@@ -33,13 +33,11 @@ jobs:
       - name: Generate coverage report
         run: |
             coverage report -m
-            coverage xml
             coverage json
 
       - name: Check xml cat
         run: |
             ls
-            cat coverage.xml
             echo --------------------------------
             cat coverage.json
 
