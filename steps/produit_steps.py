@@ -1,57 +1,54 @@
+import os
+import pytest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from behave import given, when, then
-from unittest.mock import patch
+from api.produit_api import create_produit, read_produits, delete_produit, read_specific_produit
 
-# Importez ici vos fonctions de gestion des produits
+# Configuration de la base de données en fonction de la variable d'environnement ENV
+if os.environ.get("ENV") == "test":
+    DATABASE_URL = "sqlite:///./test_db.sqlite"
+else:
+    DATABASE_URL = "sqlite:///./produit_api.db"
 
-# Les données des produits à utiliser pour les tests
-PRODUCT_DATA = {
-    1: {"id": 1, "name": "Nouveau produit", "quantity": 10}
-}
+# Créez une session de base de données
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Simulation de la création d'un produit
+# Initialisez la session de base de données pour les tests
+@pytest.fixture(scope="function")
+def db():
+    db = SessionLocal()
+    yield db
+    db.close()
+
 @given('je crée un produit avec le nom "{name}" et la quantité {quantity:d}')
-def create_product(context, name, quantity):
-    context.product_id = 1  # En supposant que l'ID du produit créé est toujours 1
-    return PRODUCT_DATA[context.product_id]
+async def create_product(context, name, quantity):
+    produit_data = {"name": name, "quantity": quantity}
+    context.produit_created = await create_produit(produit_data, db())
 
-# Simulation de la récupération de tous les produits
-@when('je récupère tous les produits')
-def get_all_products(context):
-    context.response = [product for product_id, product in PRODUCT_DATA.items()]
 
-# Vérification que le produit est créé avec l'ID associé
-@then('le produit est créé avec l\'ID associé')
-def check_product_created(context):
-    assert context.product_id in PRODUCT_DATA
-
-# Vérification que je reçois une liste de produits
-@then('je reçois une liste de produits')
-def check_products_received(context):
-    assert len(context.response) == len(PRODUCT_DATA)
-
-# Supprimer un produit existant
-@given('un produit avec l\'ID {product_id:d} existe')
-def check_product_exists(context, product_id):
-    context.product_id = product_id
-    return product_id in PRODUCT_DATA
+@then('je récupère tous les produits')
+async def get_all_products(context):
+    context.produits = await read_produits(db())
 
 @when('je supprime le produit avec l\'ID {product_id:d}')
-def delete_product(context, product_id):
-    if context.product_id in PRODUCT_DATA:
-        del PRODUCT_DATA[context.product_id]
-        context.response = True
-    else:
-        context.response = False
+async def delete_product(context, product_id):
+    await delete_produit(product_id, db())
+
+
+@then('le produit est créé')
+def check_product_created(context):
+    assert read_produits().__sizeof__() > 0
+
+@then('je reçois une liste de produits')
+async def check_products_received(context):
+    reponse = await read_produits(db())
+    assert reponse == context.produits
 
 @then('le produit est supprimé avec succès')
-def check_product_deleted(context):
-    assert context.response is True
-
-# Récupérer un produit spécifique par son ID
-@when('je récupère le produit avec l\'ID {product_id:d}')
-def get_specific_product(context, product_id):
-    context.response = PRODUCT_DATA.get(product_id)
-
+async def check_product_deleted(context):
+    assert await delete_produit(context.produits[0], db()) is not None
 @then('je reçois le produit spécifique avec l\'ID {product_id:d}')
-def check_specific_product_received(context, product_id):
-    assert context.response == PRODUCT_DATA.get(product_id)
+async def check_specific_product_received(context, product_id):
+    assert read_specific_produit(product_id) == context.produits[0]
