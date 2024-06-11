@@ -39,10 +39,7 @@ jobs:
           coverage json -o coverage.json
 
       - name: Convert JSON to XML
-        run: |
-          python convert_coverage.py
-        env:
-          COVERAGE_FILE: coverage.json
+        run: python convert_coverage.py
 
       - name: Check coverage files
         run: |

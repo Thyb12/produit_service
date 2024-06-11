@@ -1,9 +1,13 @@
 import json
 import xml.etree.ElementTree as ET
+from datetime import datetime
 
 def convert_json_to_cobertura(json_path, xml_path):
     with open(json_path, 'r') as f:
         coverage_data = json.load(f)
+
+    timestamp_iso = coverage_data['meta']['timestamp']
+    timestamp_unix = int(datetime.fromisoformat(timestamp_iso).timestamp())
 
     root = ET.Element("coverage", {
         "line-rate": "0.0",
@@ -14,12 +18,12 @@ def convert_json_to_cobertura(json_path, xml_path):
         "branches-valid": "0",
         "complexity": "0.0",
         "version": "0.1",
-        "timestamp": str(int(coverage_data['meta']['timestamp']))
+        "timestamp": str(timestamp_unix)
     })
 
     sources = ET.SubElement(root, "sources")
     source = ET.SubElement(sources, "source")
-    source.text = coverage_data['meta']['source']
+    source.text = coverage_data['meta'].get('source', '')
 
     packages = ET.SubElement(root, "packages")
     package = ET.SubElement(packages, "package", {
