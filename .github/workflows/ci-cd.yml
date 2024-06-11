@@ -34,11 +34,14 @@ jobs:
         run: |
             coverage report -m
             coverage xml
+            coverage json
 
       - name: Check xml cat
         run: |
             ls
             cat coverage.xml
+            echo --------------------------------
+            cat coverage.json
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
