@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="120e888f-a46f-4bab-81db-740f1b2b4b29" name="Changes" comment="fix cicd pour exec les tests">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-    </list>
+    <list default="true" id="120e888f-a46f-4bab-81db-740f1b2b4b29" name="Changes" comment="coverage des tests" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -171,7 +168,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718113940922</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="coverage des tests">
+      <option name="closed" value="true" />
+      <created>1718114890464</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1718114890464</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -208,7 +213,8 @@
     <MESSAGE value="ajout des test dans la pipeline" />
     <MESSAGE value="fix Dockerfile pour exec les tests" />
     <MESSAGE value="fix cicd pour exec les tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix cicd pour exec les tests" />
+    <MESSAGE value="coverage des tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="coverage des tests" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/produit_service$produit_api.coverage" NAME="produit_api Coverage Results" MODIFIED="1718104697429" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
