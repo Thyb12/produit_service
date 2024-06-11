@@ -46,10 +46,15 @@ def convert_json_to_cobertura(json_path, xml_path):
 
         lines = ET.SubElement(class_elem, "lines")
 
-        for line_num, line_data in file_data['lines'].items():
+        executed_lines = set(file_data.get('executed_lines', []))
+        missing_lines = set(file_data.get('missing_lines', []))
+        all_lines = executed_lines.union(missing_lines)
+
+        for line_num in sorted(all_lines):
+            hits = 1 if line_num in executed_lines else 0
             line_elem = ET.SubElement(lines, "line", {
                 "number": str(line_num),
-                "hits": str(line_data['hits']),
+                "hits": str(hits),
                 "branch": "false"
             })
 
