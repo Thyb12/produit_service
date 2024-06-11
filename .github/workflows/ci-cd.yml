@@ -36,7 +36,10 @@ jobs:
       - name: Generate coverage report
         run: |
           coverage report -m
-          coverage json -o coverage.json
+          coverage json
+          coverage xml
+          cat coverage.json
+          cat coverage.xml
 
       - name: Convert JSON to XML
         run: python convert_coverage.py
