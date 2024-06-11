@@ -50,4 +50,3 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_PROJECT_KEY: your_project_key
           SONAR_PROJECT_NAME: your_project_name
-          EXTRA_ARGS: '-Dsonar.coverage.reportPaths=coverage.xml'
