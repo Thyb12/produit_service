@@ -6,3 +6,5 @@ behave==1.2.6
 requests==2.26.0
 coverage
 pytest
+prometheus_client
+kafka-python

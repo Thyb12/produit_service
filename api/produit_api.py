@@ -1,15 +1,15 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, Request, Response
 from pydantic import BaseModel
 from typing import List
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
-
+from prometheus_client import Summary, Counter, generate_latest, CONTENT_TYPE_LATEST
 
 # Création de l'instance FastAPI pour initialiser l'application et permettre la définition des routes.
 app = FastAPI()
 
-# Configuration et mise en place de la connexion à la base de données avec sqlalchemy
+# Configuration et mise en place de la connexion à la base de données avec SQLAlchemy
 DATABASE_URL = "sqlite:///./produit_api.db"
 DATABASE_URL_TEST = "sqlite:///./test_db.sqlite"
 
@@ -40,17 +40,34 @@ class Produit(Base):
     name = Column(String, index=True)
     quantity = Column(Integer, index=True)
 
-# Création d'un modèle pydantic pour la création de produit
+# Création d'un modèle Pydantic pour la création de produit
 class ProduitCreate(BaseModel):
     name: str
     quantity: int
 
-# Création d'un modèle pydantic pour la réponse de produit
+# Création d'un modèle Pydantic pour la réponse de produit
 class ProduitResponse(ProduitCreate):
     id: int
 
     class Config:
         orm_mode = True
+
+# Définir des métriques Prometheus
+REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
+REQUEST_COUNT = Counter('request_count', 'Total count of requests')
+
+# Middleware pour mesurer le temps de traitement des requêtes
+@app.middleware("http")
+async def add_prometheus_metrics(request: Request, call_next):
+    with REQUEST_TIME.time():
+        response = await call_next(request)
+        REQUEST_COUNT.inc()
+    return response
+
+# Route pour exposer les métriques
+@app.get("/metrics")
+async def metrics():
+    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
 # Route POST pour créer un nouveau produit dans l'API
 @app.post("/produits/create", response_model=ProduitResponse)
