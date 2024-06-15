@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, HTTPException, Depends, Request, Response
 from pydantic import BaseModel
 from typing import List
@@ -5,19 +6,25 @@ from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from prometheus_client import Summary, Counter, generate_latest, CONTENT_TYPE_LATEST
+import pika
+import logging
+
+logger = logging.getLogger("uvicorn.error")
 
 # Création de l'instance FastAPI pour initialiser l'application et permettre la définition des routes.
 app = FastAPI()
 
 # Configuration et mise en place de la connexion à la base de données avec SQLAlchemy
-DATABASE_URL = "sqlite:///./produit_api.db"
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./produit_api.db")
 DATABASE_URL_TEST = "sqlite:///./test_db.sqlite"
+RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", "localhost")
+RABBITMQ_QUEUE = os.getenv("RABBITMQ_QUEUE", "my_queue")
 
 def get_engine(env: str = "prod"):
     if env == "test":
         return create_engine(DATABASE_URL_TEST)
     else:
-        return create_engine(DATABASE_URL)
+        return create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 
 # Définition d'une fonction pour obtenir une session de base de données en fonction de l'environnement
 def get_db(env: str = "prod"):
@@ -69,13 +76,34 @@ async def add_prometheus_metrics(request: Request, call_next):
 async def metrics():
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
-# Route POST pour créer un nouveau produit dans l'API
+def connect_rabbitmq():
+    try:
+        parameters = pika.ConnectionParameters(RABBITMQ_HOST)
+        connection = pika.BlockingConnection(parameters)
+        channel = connection.channel()
+        channel.queue_declare(queue=RABBITMQ_QUEUE)
+        return channel
+    except pika.exceptions.AMQPConnectionError as e:
+        logger.error(f"Failed to connect to RabbitMQ: {e}")
+        raise HTTPException(status_code=500, detail="Could not connect to RabbitMQ")
+
 @app.post("/produits/create", response_model=ProduitResponse)
 async def create_produit(produit: ProduitCreate, db: Session = Depends(get_db)):
     db_produit = Produit(name=produit.name, quantity=produit.quantity)
     db.add(db_produit)
     db.commit()
     db.refresh(db_produit)
+
+    try:
+        # Envoyer un message à RabbitMQ
+        channel = connect_rabbitmq()
+        message = f"Produit créé: {produit.name} avec quantité: {produit.quantity}"
+        channel.basic_publish(exchange='', routing_key=RABBITMQ_QUEUE, body=message)
+        channel.close()
+    except Exception as e:
+        logger.error(f"Erreur lors de l'envoi du message RabbitMQ : {e}")
+        raise HTTPException(status_code=500, detail="Erreur interne du serveur")
+
     return db_produit
 
 # Route GET pour voir tous les produits
