@@ -21,4 +21,4 @@ Feature: Gestion des produits dans l'API
 
   Scenario: Vérifier l'envoi d'un message RabbitMQ lors de la création d'un produit
     Given je crée un produit avec le nom "5Produit" et la quantité 10
-    Then un message RabbitMQ est envoyé avec les détails du produit "5Produit"
+    Then un message RabbitMQ est envoyé avec les détails du produit "5Produit" 10
