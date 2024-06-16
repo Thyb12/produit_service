@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="120e888f-a46f-4bab-81db-740f1b2b4b29" name="Changes" comment="coverage">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/produit_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/produit_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-    </list>
+    <list default="true" id="120e888f-a46f-4bab-81db-740f1b2b4b29" name="Changes" comment="coverage fix" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,6 +29,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feature/Redis" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -47,6 +48,9 @@
     &quot;accountId&quot;: &quot;fdc6d750-277d-431e-b556-9e4fa841f8d2&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -61,17 +65,20 @@
     &quot;Behave.Unnamed.executor&quot;: &quot;Run&quot;,
     &quot;Python tests.Python tests for produit_steps.test_create_produit.executor&quot;: &quot;Run&quot;,
     &quot;Python tests.Python tests in produit_steps.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ENV=test behave features.executor&quot;: &quot;Run&quot;,
     &quot;Python.behave.executor&quot;: &quot;Run&quot;,
+    &quot;Python.pip install --upgrade fastapi pydantic behave.executor&quot;: &quot;Run&quot;,
+    &quot;Python.producer.executor&quot;: &quot;Run&quot;,
     &quot;Python.produit_api.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/Rabbitmq&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/tjobard/PycharmProjects/produit_service/api2&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -81,11 +88,12 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/api" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/app" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests in produit_steps.py">
+  <component name="RunManager" selected="Python.ENV=test behave features">
     <configuration name="Unnamed" type="PyBehaveRunConfigurationType" factoryName="Behave" nameIsGenerated="true">
       <module name="produit_service" />
       <option name="ENV_FILES" value="" />
@@ -100,7 +108,7 @@
       <option name="ADDITIONAL_ARGS" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Unnamed" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+    <configuration name="ENV=test behave features" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="produit_service" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -115,13 +123,42 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
+      <option name="SCRIPT_NAME" value="ENV=test behave features" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
       <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="producer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="produit_service" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/api" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/api/producer.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
       <method v="2" />
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
@@ -164,12 +201,14 @@
     </configuration>
     <list>
       <item itemvalue="Behave.Unnamed" />
-      <item itemvalue="Python.Unnamed" />
+      <item itemvalue="Python.ENV=test behave features" />
+      <item itemvalue="Python.producer" />
       <item itemvalue="Python tests.Python tests for produit_steps.test_create_produit" />
       <item itemvalue="Python tests.Python tests in produit_steps.py" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.producer" />
         <item itemvalue="Python tests.Python tests in produit_steps.py" />
         <item itemvalue="Python tests.Python tests for produit_steps.test_create_produit" />
       </list>
@@ -194,14 +233,7 @@
       <workItem from="1718103498568" duration="7196000" />
       <workItem from="1718224061239" duration="59000" />
       <workItem from="1718276681905" duration="11999000" />
-    </task>
-    <task id="LOCAL-00001" summary="Init produit_service">
-      <option name="closed" value="true" />
-      <created>1718104465581</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1718104465581</updated>
+      <workItem from="1718365772566" duration="24742000" />
     </task>
     <task id="LOCAL-00002" summary="Init produit_service">
       <option name="closed" value="true" />
@@ -531,11 +563,78 @@
       <option name="project" value="LOCAL" />
       <updated>1718148285473</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Rabbit done">
+      <option name="closed" value="true" />
+      <created>1718573867579</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1718573867579</updated>
+    </task>
+    <task id="LOCAL-00044" summary="ajout feature dans ci-cd">
+      <option name="closed" value="true" />
+      <created>1718576582587</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1718576582587</updated>
+    </task>
+    <task id="LOCAL-00045" summary="ajout nouveau test">
+      <option name="closed" value="true" />
+      <created>1718578336490</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1718578336490</updated>
+    </task>
+    <task id="LOCAL-00046" summary="ajout nouveau test">
+      <option name="closed" value="true" />
+      <created>1718578598789</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1718578598789</updated>
+    </task>
+    <task id="LOCAL-00047" summary="fix">
+      <option name="closed" value="true" />
+      <created>1718578673334</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1718578673334</updated>
+    </task>
+    <task id="LOCAL-00048" summary="fix">
+      <option name="closed" value="true" />
+      <created>1718579290383</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1718579290383</updated>
+    </task>
+    <task id="LOCAL-00049" summary="fix">
+      <option name="closed" value="true" />
+      <created>1718579509622</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1718579509622</updated>
+    </task>
+    <task id="LOCAL-00050" summary="coverage fix">
+      <option name="closed" value="true" />
+      <created>1718580422973</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1718580422975</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.api" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -548,7 +647,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="main" />
+                        <option value="feature/Rabbitmq" />
                       </list>
                     </value>
                   </entry>
@@ -573,11 +672,19 @@
     <MESSAGE value="push coverage" />
     <MESSAGE value="test avec le coverage immense." />
     <MESSAGE value="coverage" />
-    <option name="LAST_COMMIT_MESSAGE" value="coverage" />
+    <MESSAGE value="Redis init" />
+    <MESSAGE value="Rabbit done" />
+    <MESSAGE value="ajout feature dans ci-cd" />
+    <MESSAGE value="ajout nouveau test" />
+    <MESSAGE value="fix" />
+    <MESSAGE value="coverage fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="coverage fix" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/produit_service$producer.coverage" NAME="producer Coverage Results" MODIFIED="1718572817015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
     <SUITE FILE_PATH="coverage/produit_service$behave.coverage" NAME="behave Coverage Results" MODIFIED="1718129482042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/steps" />
     <SUITE FILE_PATH="coverage/produit_service$.coverage" NAME=" Coverage Results" MODIFIED="1718131760765" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/steps" />
+    <SUITE FILE_PATH="coverage/produit_service$pip_install___upgrade_fastapi_pydantic_behave.coverage" NAME="ENV=test behave features Coverage Results" MODIFIED="1718575195686" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/produit_service$produit_api.coverage" NAME="produit_api Coverage Results" MODIFIED="1718129571089" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
     <SUITE FILE_PATH="coverage/produit_service$Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1718129752504" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>

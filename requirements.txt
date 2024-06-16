@@ -7,4 +7,4 @@ requests==2.26.0
 coverage
 pytest
 prometheus_client
-kafka-python
+pika==1.2.0

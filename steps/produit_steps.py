@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from behave import given, when, then
 from api.produit_api import create_produit, read_produits, delete_produit, read_specific_produit
+from unittest.mock import patch
 
 # Configuration de la base de données en fonction de la variable d'environnement ENV
 if os.environ.get("ENV") == "test":
@@ -52,3 +53,14 @@ async def check_product_deleted(context):
 @then('je reçois le produit spécifique avec l\'ID {product_id:d}')
 async def check_specific_product_received(context, product_id):
     assert read_specific_produit(product_id) == context.produits[0]
+
+@then('un message RabbitMQ est envoyé avec les détails du produit "{name} {quantity}')
+@patch('api.produit_api.connect_rabbitmq')
+async def check_rabbitmq_message_sent(mock_connect_rabbitmq, name, quantity):
+    mock_channel = mock_connect_rabbitmq.return_value
+    mock_channel.basic_get.return_value = (None, None, f"Produit créé: {name} avec quantité: {quantity}".encode('utf-8'))
+
+    await create_produit( produit={"name": name, "quantity": quantity}, db=db())
+
+    mock_connect_rabbitmq.assert_called_once()
+    mock_channel.basic_publish.assert_called_once_with(exchange='', routing_key='produit_queue', body=f"Produit créé: {name} avec quantité: {context.produit_created.quantity}")
