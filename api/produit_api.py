@@ -18,7 +18,7 @@ app = FastAPI()
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./produit_api.db")
 DATABASE_URL_TEST = "sqlite:///./test_db.sqlite"
 RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", "localhost")
-RABBITMQ_QUEUE = os.getenv("RABBITMQ_QUEUE", "my_queue")
+RABBITMQ_QUEUE = os.getenv("RABBITMQ_QUEUE", "produit_queue")
 
 def get_engine(env: str = "prod"):
     if env == "test":
