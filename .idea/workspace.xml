@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="120e888f-a46f-4bab-81db-740f1b2b4b29" name="Changes" comment="Rabbit done">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/produit_service.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/produit_service.iml" afterDir="false" />
+    <list default="true" id="120e888f-a46f-4bab-81db-740f1b2b4b29" name="Changes" comment="ajout feature dans ci-cd">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/steps/produit_steps.py" beforeDir="false" afterPath="$PROJECT_DIR$/steps/produit_steps.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -584,7 +582,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718573867579</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="ajout feature dans ci-cd">
+      <option name="closed" value="true" />
+      <created>1718576582587</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1718576582587</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -631,7 +637,8 @@
     <MESSAGE value="coverage" />
     <MESSAGE value="Redis init" />
     <MESSAGE value="Rabbit done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rabbit done" />
+    <MESSAGE value="ajout feature dans ci-cd" />
+    <option name="LAST_COMMIT_MESSAGE" value="ajout feature dans ci-cd" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/produit_service$producer.coverage" NAME="producer Coverage Results" MODIFIED="1718572817015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />

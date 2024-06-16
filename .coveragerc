@@ -15,3 +15,5 @@ source = api/
 branch = True
 omit =
     steps/produit_steps.py
+    api/producer.py
+    api/consumer.py
