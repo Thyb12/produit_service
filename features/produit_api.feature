@@ -2,7 +2,7 @@ Feature: Gestion des produits dans l'API
 
   Scenario: Créer un nouveau produit
     Given je crée un produit avec le nom "1Produit" et la quantité 10
-    Then le produit "1Produit" est créé
+    Then le produit est créé
 
   Scenario: Récupérer tous les produits
     Given je crée un produit avec le nom "2Produit" et la quantité 10

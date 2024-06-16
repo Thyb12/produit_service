@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="120e888f-a46f-4bab-81db-740f1b2b4b29" name="Changes" comment="ajout nouveau test" />
+    <list default="true" id="120e888f-a46f-4bab-81db-740f1b2b4b29" name="Changes" comment="fix">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/features/produit_api.feature" beforeDir="false" afterPath="$PROJECT_DIR$/features/produit_api.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/steps/produit_steps.py" beforeDir="false" afterPath="$PROJECT_DIR$/steps/produit_steps.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -595,7 +599,23 @@
       <option name="project" value="LOCAL" />
       <updated>1718578336490</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="ajout nouveau test">
+      <option name="closed" value="true" />
+      <created>1718578598789</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1718578598789</updated>
+    </task>
+    <task id="LOCAL-00047" summary="fix">
+      <option name="closed" value="true" />
+      <created>1718578673334</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1718578673334</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -644,7 +664,8 @@
     <MESSAGE value="Rabbit done" />
     <MESSAGE value="ajout feature dans ci-cd" />
     <MESSAGE value="ajout nouveau test" />
-    <option name="LAST_COMMIT_MESSAGE" value="ajout nouveau test" />
+    <MESSAGE value="fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/produit_service$producer.coverage" NAME="producer Coverage Results" MODIFIED="1718572817015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
