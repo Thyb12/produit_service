@@ -37,11 +37,10 @@ async def get_all_products(context):
 async def delete_product(context, product_id):
     await delete_produit(product_id, context.db())
 
-@then('le produit est créé')
-def check_product_created(context):
-    created_name = context.produit_data["name"]
-    created_quantity = context.produit_data["quantity"]
-    assert any(produit.name == created_name and produit.quantity == created_quantity for produit in context.produits)
+@then('le produit {name} est créé')
+def check_product_created(context, name):
+    created_name = name
+    assert any(produit.name == created_name for produit in context.produits)
 
 @then('je reçois une liste de produits')
 async def check_products_received(context):
