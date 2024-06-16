@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="120e888f-a46f-4bab-81db-740f1b2b4b29" name="Changes" comment="ajout de prometheus monitoring">
-      <change afterPath="$PROJECT_DIR$/Dockerfile.producer" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/producer.py" afterDir="false" />
+    <list default="true" id="120e888f-a46f-4bab-81db-740f1b2b4b29" name="Changes" comment="Rabbit done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/consumer.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/consumer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/produit_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/produit_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +68,9 @@
     "Behave.Unnamed.executor": "Run",
     "Python tests.Python tests for produit_steps.test_create_produit.executor": "Run",
     "Python tests.Python tests in produit_steps.py.executor": "Run",
+    "Python.ENV=test behave features.executor": "Run",
     "Python.behave.executor": "Run",
+    "Python.pip install --upgrade fastapi pydantic behave.executor": "Run",
     "Python.producer.executor": "Run",
     "Python.produit_api.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -98,7 +96,7 @@
       <recent name="$PROJECT_DIR$/app" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.producer">
+  <component name="RunManager" selected="Python.ENV=test behave features">
     <configuration name="Unnamed" type="PyBehaveRunConfigurationType" factoryName="Behave" nameIsGenerated="true">
       <module name="produit_service" />
       <option name="ENV_FILES" value="" />
@@ -113,7 +111,7 @@
       <option name="ADDITIONAL_ARGS" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Unnamed" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+    <configuration name="ENV=test behave features" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="produit_service" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -128,7 +126,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
+      <option name="SCRIPT_NAME" value="ENV=test behave features" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -206,7 +204,7 @@
     </configuration>
     <list>
       <item itemvalue="Behave.Unnamed" />
-      <item itemvalue="Python.Unnamed" />
+      <item itemvalue="Python.ENV=test behave features" />
       <item itemvalue="Python.producer" />
       <item itemvalue="Python tests.Python tests for produit_steps.test_create_produit" />
       <item itemvalue="Python tests.Python tests in produit_steps.py" />
@@ -576,7 +574,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718148285473</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Rabbit done">
+      <option name="closed" value="true" />
+      <created>1718573867579</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1718573867579</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -622,12 +628,14 @@
     <MESSAGE value="test avec le coverage immense." />
     <MESSAGE value="coverage" />
     <MESSAGE value="Redis init" />
-    <option name="LAST_COMMIT_MESSAGE" value="Redis init" />
+    <MESSAGE value="Rabbit done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rabbit done" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/produit_service$producer.coverage" NAME="producer Coverage Results" MODIFIED="1718572817015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
     <SUITE FILE_PATH="coverage/produit_service$behave.coverage" NAME="behave Coverage Results" MODIFIED="1718129482042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/steps" />
     <SUITE FILE_PATH="coverage/produit_service$.coverage" NAME=" Coverage Results" MODIFIED="1718131760765" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/steps" />
+    <SUITE FILE_PATH="coverage/produit_service$pip_install___upgrade_fastapi_pydantic_behave.coverage" NAME="ENV=test behave features Coverage Results" MODIFIED="1718575195686" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/produit_service$produit_api.coverage" NAME="produit_api Coverage Results" MODIFIED="1718129571089" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
     <SUITE FILE_PATH="coverage/produit_service$Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1718129752504" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>

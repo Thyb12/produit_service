@@ -47,12 +47,12 @@ class Produit(Base):
     name = Column(String, index=True)
     quantity = Column(Integer, index=True)
 
-# Création d'un modèle Pydantic pour la création de produit
+# Création d'un modèle pydantic pour la création de produit
 class ProduitCreate(BaseModel):
     name: str
     quantity: int
 
-# Création d'un modèle Pydantic pour la réponse de produit
+# Création d'un modèle pydantic pour la réponse de produit
 class ProduitResponse(ProduitCreate):
     id: int
 
@@ -87,22 +87,24 @@ def connect_rabbitmq():
         logger.error(f"Failed to connect to RabbitMQ: {e}")
         raise HTTPException(status_code=500, detail="Could not connect to RabbitMQ")
 
+
+# Route POST pour créer un nouveau produit dans l'API
 @app.post("/produits/create", response_model=ProduitResponse)
 async def create_produit(produit: ProduitCreate, db: Session = Depends(get_db)):
     db_produit = Produit(name=produit.name, quantity=produit.quantity)
     db.add(db_produit)
     db.commit()
     db.refresh(db_produit)
-
-    try:
-        # Envoyer un message à RabbitMQ
-        channel = connect_rabbitmq()
-        message = f"Produit créé: {produit.name} avec quantité: {produit.quantity}"
-        channel.basic_publish(exchange='', routing_key=RABBITMQ_QUEUE, body=message)
-        channel.close()
-    except Exception as e:
-        logger.error(f"Erreur lors de l'envoi du message RabbitMQ : {e}")
-        raise HTTPException(status_code=500, detail="Erreur interne du serveur")
+    if os.getenv("ENV") == "prod":
+        try:
+            # Envoyer un message à RabbitMQ
+            channel = connect_rabbitmq()
+            message = f"Produit créé: {produit.name} avec quantité: {produit.quantity}"
+            channel.basic_publish(exchange='', routing_key=RABBITMQ_QUEUE, body=message)
+            channel.close()
+        except Exception as e:
+            logger.error(f"Erreur lors de l'envoi du message RabbitMQ : {e}")
+            raise HTTPException(status_code=500, detail="Erreur interne du serveur")
 
     return db_produit
 
