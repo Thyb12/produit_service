@@ -1,5 +1,4 @@
 import os
-from datetime import datetime
 from fastapi import FastAPI, HTTPException, Depends, Request, Response
 from pydantic import BaseModel
 from typing import List, Optional
@@ -71,7 +70,11 @@ class ProduitCreate(BaseModel):
 # Création d'un modèle pydantic pour la réponse de produit
 class ProduitResponse(ProduitCreate):
     id: int
-    createdAt: Optional[datetime]
+    name: str
+    details: str
+    stock: int
+    createdAt: Optional[DateTime]
+    commandes: List[int]
 
     class Config:
         orm_mode = True
@@ -109,12 +112,7 @@ def connect_rabbitmq():
 # Route POST pour créer un nouveau produit dans l'API
 @app.post("/produits/create", response_model=ProduitResponse)
 async def create_produit(produit: ProduitCreate, db: Session = Depends(get_db)):
-    db_produit = Produit(
-        name=produit.name,
-        details=produit.details,
-        stock=produit.stock,
-        commandes=[]
-    )
+    db_produit = Produit(name=produit.name, details=produit.details, stock=produit.stock)
     db.add(db_produit)
     db.commit()
     db.refresh(db_produit)
