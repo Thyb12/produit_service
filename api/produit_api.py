@@ -64,6 +64,7 @@ class ProduitCreate(BaseModel):
     name: str
     details: str
     stock: int
+    commandes: List[int] = []
 
 # Création d'un modèle pydantic pour la réponse de produit
 class ProduitResponse(ProduitCreate):
@@ -76,6 +77,7 @@ class ProduitResponse(ProduitCreate):
 
     class Config:
         orm_mode = True
+        arbitrary_types_allowed = True
 
 # Définir des métriques Prometheus
 REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
