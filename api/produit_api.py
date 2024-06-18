@@ -2,7 +2,7 @@ import os
 from fastapi import FastAPI, HTTPException, Depends, Request, Response
 from pydantic import BaseModel
 from typing import List, Optional
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, Table, ARRAY, Float
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session, relationship
 from sqlalchemy.sql import func
@@ -58,27 +58,22 @@ class Produit(Base):
     details = Column(String)  # JSON-like string to store price, description, color
     stock = Column(Integer)
     createdAt = Column(DateTime(timezone=True), server_default=func.now())
-    commandes = Column(ARRAY(Integer))
+    commandes = relationship("Commande", secondary=commande_product_link, back_populates="produits")
 
 # Création d'un modèle pydantic pour la création de produit
 class ProduitCreate(BaseModel):
     name: str
     details: str
     stock: int
-    commandes: List[int] = []
 
 # Création d'un modèle pydantic pour la réponse de produit
 class ProduitResponse(ProduitCreate):
     id: int
-    name: str
-    details: str
-    stock: int
     createdAt: Optional[DateTime]
-    commandes: List[int]
+    orderId: Optional[int]
 
     class Config:
         orm_mode = True
-        arbitrary_types_allowed = True
 
 # Définir des métriques Prometheus
 REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
@@ -96,7 +91,6 @@ async def add_prometheus_metrics(request: Request, call_next):
 @app.get("/metrics")
 async def metrics():
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
-
 
 def connect_rabbitmq():
     try:
