@@ -2,7 +2,7 @@ import os
 from fastapi import FastAPI, HTTPException, Depends, Request, Response
 from pydantic import BaseModel
 from typing import List, Optional
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, Table
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, Table, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session, relationship
 from sqlalchemy.sql import func
@@ -57,7 +57,7 @@ class Produit(Base):
     details = Column(String)  # JSON-like string to store price, description, color
     stock = Column(Integer)
     createdAt = Column(DateTime(timezone=True), server_default=func.now())
-    commandes = Column(List[int])
+    commandes = Column(ARRAY(Integer))
 
 # Création d'un modèle pydantic pour la création de produit
 class ProduitCreate(BaseModel):
