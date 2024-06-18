@@ -23,7 +23,7 @@ def db():
     yield db
     db.close()
 
-@given('je crée un produit avec le nom "{name}","{details}" et la quantité {quantity:d}')
+@given('je crée un produit avec le nom "{name}" "{details}" et la quantité {quantity:d}')
 async def create_product(context, name, details, quantity):
     produit_data = {"name": name, "details": details, "stock": quantity}
     context.produit_created = await create_produit(produit_data, db())
