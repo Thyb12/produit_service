@@ -1,8 +1,9 @@
 import os
+from datetime import datetime
 from fastapi import FastAPI, HTTPException, Depends, Request, Response
 from pydantic import BaseModel
 from typing import List, Optional
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, Table, ARRAY
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, Table, ARRAY, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session, relationship
 from sqlalchemy.sql import func
@@ -20,6 +21,7 @@ DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./produit_api.db")
 DATABASE_URL_TEST = "sqlite:///./test_db.sqlite"
 RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", "localhost")
 RABBITMQ_QUEUE = os.getenv("RABBITMQ_QUEUE", "produit_queue")
+
 
 def get_engine(env: str = "prod"):
     if env == "test":
@@ -69,11 +71,7 @@ class ProduitCreate(BaseModel):
 # Création d'un modèle pydantic pour la réponse de produit
 class ProduitResponse(ProduitCreate):
     id: int
-    name: str
-    details: str
-    stock: int
-    createdAt: Optional[DateTime]
-    commandes: List[int]
+    createdAt: Optional[datetime]
 
     class Config:
         orm_mode = True
@@ -96,6 +94,7 @@ async def add_prometheus_metrics(request: Request, call_next):
 async def metrics():
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
+
 def connect_rabbitmq():
     try:
         parameters = pika.ConnectionParameters(RABBITMQ_HOST)
@@ -110,7 +109,12 @@ def connect_rabbitmq():
 # Route POST pour créer un nouveau produit dans l'API
 @app.post("/produits/create", response_model=ProduitResponse)
 async def create_produit(produit: ProduitCreate, db: Session = Depends(get_db)):
-    db_produit = Produit(name=produit.name, details=produit.details, stock=produit.stock)
+    db_produit = Produit(
+        name=produit.name,
+        details=produit.details,
+        stock=produit.stock,
+        commandes=[]
+    )
     db.add(db_produit)
     db.commit()
     db.refresh(db_produit)
