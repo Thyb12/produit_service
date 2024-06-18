@@ -57,7 +57,7 @@ class Produit(Base):
     details = Column(String)  # JSON-like string to store price, description, color
     stock = Column(Integer)
     createdAt = Column(DateTime(timezone=True), server_default=func.now())
-    commandes = relationship("Commande", secondary=commande_product_link, back_populates="produits")
+    commandes = Column(List[int])
 
 # Création d'un modèle pydantic pour la création de produit
 class ProduitCreate(BaseModel):
@@ -68,8 +68,11 @@ class ProduitCreate(BaseModel):
 # Création d'un modèle pydantic pour la réponse de produit
 class ProduitResponse(ProduitCreate):
     id: int
+    name: str
+    details: str
+    stock: int
     createdAt: Optional[DateTime]
-    orderId: Optional[int]
+    commandes: List[int]
 
     class Config:
         orm_mode = True
