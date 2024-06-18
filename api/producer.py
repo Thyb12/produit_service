@@ -18,7 +18,7 @@ def connect_and_publish():
                                   routing_key=RABBITMQ_QUEUE,
                                   body=message)
             print(f'Sent message: {message}')
-            time.sleep(0.1)  # Envoyer un message toutes les 5 secondes
+            time.sleep(5)  # Envoyer un message toutes les 5 secondes
     except KeyboardInterrupt:
         print('Interrupted')
     finally:

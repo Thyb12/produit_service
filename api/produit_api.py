@@ -9,7 +9,7 @@ from sqlalchemy.sql import func
 from prometheus_client import Summary, Counter, generate_latest, CONTENT_TYPE_LATEST
 import pika
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -44,14 +44,6 @@ def get_db(env: str = "prod"):
 # Définition d'un modèle de données pour un produit dans la base de données
 Base = declarative_base()
 
-# Table d'association pour la relation many-to-many entre Commande et Produit
-commande_product_link = Table(
-    'commande_product_link',
-    Base.metadata,
-    Column('commande_id', Integer, ForeignKey('commande.id'), primary_key=True),
-    Column('product_id', Integer, ForeignKey('produits.id'), primary_key=True)
-)
-
 class Produit(Base):
     __tablename__ = "produits"
     id = Column(Integer, primary_key=True, index=True)
@@ -59,7 +51,6 @@ class Produit(Base):
     details = Column(String)  # JSON-like string to store price, description, color
     stock = Column(Integer)
     createdAt = Column(DateTime(timezone=True), server_default=func.now())
-    commandes = relationship("Commande", secondary=commande_product_link, back_populates="produits")
 
 # Création d'un modèle pydantic pour la création de produit
 class ProduitCreate(BaseModel):
@@ -71,7 +62,6 @@ class ProduitCreate(BaseModel):
 class ProduitResponse(ProduitCreate):
     id: int
     createdAt: Optional[datetime]
-    orderId: Optional[int]
 
     class Config:
         orm_mode = True
@@ -105,23 +95,49 @@ def connect_rabbitmq():
         logger.error(f"Failed to connect to RabbitMQ: {e}")
         raise HTTPException(status_code=500, detail="Could not connect to RabbitMQ")
 
+failed_attempts = {}
+
+# Fonction pour vérifier et limiter les tentatives de connexion
+def rate_limiting(ip_address: str):
+    now = datetime.now()
+    if ip_address in failed_attempts:
+        attempt_info = failed_attempts[ip_address]
+        last_attempt_time = attempt_info["timestamp"]
+        attempts = attempt_info["count"]
+        logger.info(f"IP {ip_address}: {attempts} attempts, last attempt at {last_attempt_time}")
+        # Si moins de 60 secondes depuis la dernière tentative, augmenter le compteur de tentatives
+        if now - last_attempt_time < timedelta(seconds=60):
+            attempts += 1
+            failed_attempts[ip_address] = {"count": attempts, "timestamp": now}
+            # Si plus de 5 tentatives dans les 60 secondes, déclencher la limitation
+            if attempts > 5:
+                raise HTTPException(status_code=429, detail="Too many requests. Try again later.")
+        else:
+            # Réinitialiser après 60 secondes
+            failed_attempts[ip_address] = {"count": 1, "timestamp": now}
+    else:
+        failed_attempts[ip_address] = {"count": 1, "timestamp": now}
+    logger.info(f"IP {ip_address}: allowed")
+
 # Route POST pour créer un nouveau produit dans l'API
 @app.post("/produits/create", response_model=ProduitResponse)
-async def create_produit(produit: ProduitCreate, db: Session = Depends(get_db)):
+async def create_produit(produit: ProduitCreate, request: Request, db: Session = Depends(get_db)):
+    client_ip = request.client.host
+    rate_limiting(client_ip)  # Limiter les tentatives de connexion par adresse IP
+
     db_produit = Produit(name=produit.name, details=produit.details, stock=produit.stock)
     db.add(db_produit)
     db.commit()
     db.refresh(db_produit)
-    if os.getenv("ENV") == "prod":
-        try:
-            # Envoyer un message à RabbitMQ
-            channel = connect_rabbitmq()
-            message = f"Produit créé: {produit.name} avec détails: {produit.details} et stock: {produit.stock}"
-            channel.basic_publish(exchange='', routing_key=RABBITMQ_QUEUE, body=message)
-            channel.close()
-        except Exception as e:
-            logger.error(f"Erreur lors de l'envoi du message RabbitMQ : {e}")
-            raise HTTPException(status_code=500, detail="Erreur interne du serveur")
+    try:
+        # Envoyer un message à RabbitMQ
+        channel = connect_rabbitmq()
+        message = f"Produit créé: {produit.name} avec détails: {produit.details} et stock: {produit.stock}"
+        channel.basic_publish(exchange='', routing_key=RABBITMQ_QUEUE, body=message)
+        channel.close()
+    except Exception as e:
+        logger.error(f"Erreur lors de l'envoi du message RabbitMQ : {e}")
+        raise HTTPException(status_code=500, detail="Erreur interne du serveur")
 
     return db_produit
 
