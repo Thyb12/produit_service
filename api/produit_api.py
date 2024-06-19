@@ -149,7 +149,10 @@ async def read_produits(skip: int = 0, limit: int = 10, db: Session = Depends(ge
 
 # Route DELETE pour supprimer un produit par son id
 @app.delete("/produits/{produit_id}")
-async def delete_produit(produit_id: int, db: Session = Depends(get_db)):
+async def delete_produit(request: Request, produit_id: int, db: Session = Depends(get_db)):
+    client_ip = request.client.host
+    rate_limiting(client_ip)  # Limiter les tentatives de connexion par adresse IP
+
     db_produit = db.query(Produit).filter(Produit.id == produit_id).first()
     if db_produit is None:
         raise HTTPException(status_code=404, detail="Produit not found")

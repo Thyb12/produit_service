@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="120e888f-a46f-4bab-81db-740f1b2b4b29" name="Changes" comment="coverage fix" />
+    <list default="true" id="120e888f-a46f-4bab-81db-740f1b2b4b29" name="Changes" comment="ajout sécu et fix">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/produit_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/produit_api.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,7 +34,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/Redis" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -71,7 +74,7 @@
     &quot;Python.producer.executor&quot;: &quot;Run&quot;,
     &quot;Python.produit_api.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/Rabbitmq&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/update-bdd&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/tjobard/PycharmProjects/produit_service/api2&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -208,9 +211,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.producer" />
         <item itemvalue="Python tests.Python tests in produit_steps.py" />
         <item itemvalue="Python tests.Python tests for produit_steps.test_create_produit" />
+        <item itemvalue="Python.producer" />
+        <item itemvalue="Python.producer" />
+        <item itemvalue="Python tests.Python tests in produit_steps.py" />
       </list>
     </recent_temporary>
   </component>
@@ -234,86 +239,8 @@
       <workItem from="1718224061239" duration="59000" />
       <workItem from="1718276681905" duration="11999000" />
       <workItem from="1718365772566" duration="24742000" />
-    </task>
-    <task id="LOCAL-00002" summary="Init produit_service">
-      <option name="closed" value="true" />
-      <created>1718104564914</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1718104564914</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Init produit_service">
-      <option name="closed" value="true" />
-      <created>1718104606565</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1718104606565</updated>
-    </task>
-    <task id="LOCAL-00004" summary="fix api et init Docker">
-      <option name="closed" value="true" />
-      <created>1718106314141</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1718106314141</updated>
-    </task>
-    <task id="LOCAL-00005" summary="init Github Action et SonarQube">
-      <option name="closed" value="true" />
-      <created>1718107195625</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1718107195625</updated>
-    </task>
-    <task id="LOCAL-00006" summary="fix sonar scans">
-      <option name="closed" value="true" />
-      <created>1718107475236</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1718107475236</updated>
-    </task>
-    <task id="LOCAL-00007" summary="fix sonar scans">
-      <option name="closed" value="true" />
-      <created>1718107587807</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1718107587807</updated>
-    </task>
-    <task id="LOCAL-00008" summary="fix sonar scans">
-      <option name="closed" value="true" />
-      <created>1718107790288</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1718107790288</updated>
-    </task>
-    <task id="LOCAL-00009" summary="ajout des test dans la pipeline">
-      <option name="closed" value="true" />
-      <created>1718113243963</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1718113243963</updated>
-    </task>
-    <task id="LOCAL-00010" summary="fix Dockerfile pour exec les tests">
-      <option name="closed" value="true" />
-      <created>1718113551111</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1718113551111</updated>
-    </task>
-    <task id="LOCAL-00011" summary="fix cicd pour exec les tests">
-      <option name="closed" value="true" />
-      <created>1718113940921</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1718113940922</updated>
+      <workItem from="1718748523765" duration="1508000" />
+      <workItem from="1718750631913" duration="162000" />
     </task>
     <task id="LOCAL-00012" summary="coverage des tests">
       <option name="closed" value="true" />
@@ -627,7 +554,87 @@
       <option name="project" value="LOCAL" />
       <updated>1718580422975</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="coverage fix">
+      <option name="closed" value="true" />
+      <created>1718722073572</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1718722073572</updated>
+    </task>
+    <task id="LOCAL-00052" summary="fix test et bdd">
+      <option name="closed" value="true" />
+      <created>1718723347921</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1718723347921</updated>
+    </task>
+    <task id="LOCAL-00053" summary="fix test et bdd">
+      <option name="closed" value="true" />
+      <created>1718723507995</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1718723507995</updated>
+    </task>
+    <task id="LOCAL-00054" summary="fix test et bdd">
+      <option name="closed" value="true" />
+      <created>1718723934092</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1718723934092</updated>
+    </task>
+    <task id="LOCAL-00055" summary="fix test et bdd">
+      <option name="closed" value="true" />
+      <created>1718724632836</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1718724632836</updated>
+    </task>
+    <task id="LOCAL-00056" summary="fix test et bdd">
+      <option name="closed" value="true" />
+      <created>1718725167160</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1718725167160</updated>
+    </task>
+    <task id="LOCAL-00057" summary="fix test et bdd">
+      <option name="closed" value="true" />
+      <created>1718734935594</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1718734935594</updated>
+    </task>
+    <task id="LOCAL-00058" summary="fix test et bdd">
+      <option name="closed" value="true" />
+      <created>1718736685903</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1718736685903</updated>
+    </task>
+    <task id="LOCAL-00059" summary="fix test et bdd">
+      <option name="closed" value="true" />
+      <created>1718737003186</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1718737003186</updated>
+    </task>
+    <task id="LOCAL-00060" summary="ajout sécu et fix">
+      <option name="closed" value="true" />
+      <created>1718740999160</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1718740999160</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -637,6 +644,21 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.api" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="HEAD" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -678,10 +700,12 @@
     <MESSAGE value="ajout nouveau test" />
     <MESSAGE value="fix" />
     <MESSAGE value="coverage fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="coverage fix" />
+    <MESSAGE value="fix test et bdd" />
+    <MESSAGE value="ajout sécu et fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="ajout sécu et fix" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/produit_service$producer.coverage" NAME="producer Coverage Results" MODIFIED="1718572817015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
+    <SUITE FILE_PATH="coverage/produit_service$producer.coverage" NAME="producer Coverage Results" MODIFIED="1718647300004" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
     <SUITE FILE_PATH="coverage/produit_service$behave.coverage" NAME="behave Coverage Results" MODIFIED="1718129482042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/steps" />
     <SUITE FILE_PATH="coverage/produit_service$.coverage" NAME=" Coverage Results" MODIFIED="1718131760765" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/steps" />
     <SUITE FILE_PATH="coverage/produit_service$pip_install___upgrade_fastapi_pydantic_behave.coverage" NAME="ENV=test behave features Coverage Results" MODIFIED="1718575195686" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
