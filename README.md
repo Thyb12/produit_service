@@ -6,10 +6,10 @@
 - [Schéma d'architecture](#schéma-darchitecture)
 - [Sécurité de l’API](#sécurité-de-lapi)
 - [Langage de programmation](#langage-de-programmation)
-- [Règles d’hébergement](#règles-dhébergement)
-- [Gestion du code source](#gestion-du-code-source)
 - [Gestion du déploiement](#gestion-du-déploiement)
 - [Utilisation](#utilisation)
+- [Endpoints principaux](#endpoints-principaux)
+- [Exemples de requêtes](#exemples-de-requêtes)
 
 ## Description
 
