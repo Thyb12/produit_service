@@ -2,13 +2,11 @@ import os
 from fastapi import FastAPI, HTTPException, Depends, Request, Response
 from pydantic import BaseModel
 from typing import List, Optional
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, Table
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, Session, relationship
-from sqlalchemy.sql import func
+from pymongo import MongoClient
+from bson import ObjectId
 from prometheus_client import Summary, Counter, generate_latest, CONTENT_TYPE_LATEST
-import pika
 import logging
+import pika
 from datetime import datetime, timedelta
 
 logger = logging.getLogger("uvicorn.error")
@@ -16,41 +14,15 @@ logger = logging.getLogger("uvicorn.error")
 # Création de l'instance FastAPI pour initialiser l'application et permettre la définition des routes.
 app = FastAPI()
 
-# Configuration et mise en place de la connexion à la base de données avec SQLAlchemy
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./produit_api.db")
-DATABASE_URL_TEST = "sqlite:///./test_db.sqlite"
-RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", "localhost")
-RABBITMQ_QUEUE = os.getenv("RABBITMQ_QUEUE", "produit_queue")
-
-
-def get_engine(env: str = "prod"):
-    if env == "test":
-        return create_engine(DATABASE_URL_TEST)
-    else:
-        return create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
-
-# Définition d'une fonction pour obtenir une session de base de données en fonction de l'environnement
-def get_db(env: str = "prod"):
-    engine = get_engine(env)
-    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-    db = SessionLocal()
-    if env == "prod":
-        Base.metadata.create_all(bind=engine)
-    try:
-        yield db
-    finally:
-        db.close()
-
-# Définition d'un modèle de données pour un produit dans la base de données
-Base = declarative_base()
-
-class Produit(Base):
-    __tablename__ = "produits"
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
-    details = Column(String)  # JSON-like string to store price, description, color
-    stock = Column(Integer)
-    createdAt = Column(DateTime(timezone=True), server_default=func.now())
+# Configuration et mise en place de la connexion à la base de données avec MongoDB
+MONGODB_URL = "mongodb://localhost:27017"
+DATABASE_NAME = "MSPR_1"
+COLLECTION_NAME = "produits"
+RABBITMQ_HOST = "localhost"
+RABBITMQ_QUEUE = "produit_queue"
+client = MongoClient(MONGODB_URL)
+db = client[DATABASE_NAME]
+collection = db[COLLECTION_NAME]
 
 # Création d'un modèle pydantic pour la création de produit
 class ProduitCreate(BaseModel):
@@ -60,7 +32,7 @@ class ProduitCreate(BaseModel):
 
 # Création d'un modèle pydantic pour la réponse de produit
 class ProduitResponse(ProduitCreate):
-    id: int
+    id: str
     createdAt: Optional[datetime]
 
     class Config:
@@ -70,6 +42,7 @@ class ProduitResponse(ProduitCreate):
 # Définir des métriques Prometheus
 REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
 REQUEST_COUNT = Counter('request_count', 'Total count of requests')
+
 
 # Middleware pour mesurer le temps de traitement des requêtes
 @app.middleware("http")
@@ -121,14 +94,15 @@ def rate_limiting(ip_address: str):
 
 # Route POST pour créer un nouveau produit dans l'API
 @app.post("/produits/create", response_model=ProduitResponse)
-async def create_produit(produit: ProduitCreate, request: Request, db: Session = Depends(get_db)):
+async def create_produit(produit: ProduitCreate, request: Request):
     client_ip = request.client.host
     rate_limiting(client_ip)  # Limiter les tentatives de connexion par adresse IP
 
-    db_produit = Produit(name=produit.name, details=produit.details, stock=produit.stock)
-    db.add(db_produit)
-    db.commit()
-    db.refresh(db_produit)
+    produit_data = produit.dict()
+    produit_data["createdAt"] = datetime.utcnow()
+    result = collection.insert_one(produit_data)
+    produit_data["id"] = str(result.inserted_id)
+
     try:
         # Envoyer un message à RabbitMQ
         channel = connect_rabbitmq()
@@ -139,48 +113,50 @@ async def create_produit(produit: ProduitCreate, request: Request, db: Session =
         logger.error(f"Erreur lors de l'envoi du message RabbitMQ : {e}")
         raise HTTPException(status_code=500, detail="Erreur interne du serveur")
 
-    return db_produit
+    return produit_data
 
 # Route GET pour voir tous les produits
 @app.get("/produits/all", response_model=List[ProduitResponse])
-async def read_produits(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    produits = db.query(Produit).offset(skip).limit(limit).all()
+async def read_produits(skip: int = 0, limit: int = 10):
+    produits = list(collection.find().skip(skip).limit(limit))
+    for produit in produits:
+        produit["id"] = str(produit["_id"])
+        del produit["_id"]
     return produits
 
 # Route DELETE pour supprimer un produit par son id
 @app.delete("/produits/{produit_id}")
-async def delete_produit(request: Request, produit_id: int, db: Session = Depends(get_db)):
+async def delete_produit(request: Request, produit_id: str):
     client_ip = request.client.host
     rate_limiting(client_ip)  # Limiter les tentatives de connexion par adresse IP
 
-    db_produit = db.query(Produit).filter(Produit.id == produit_id).first()
-    if db_produit is None:
+    result = collection.delete_one({"_id": ObjectId(produit_id)})
+    if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Produit not found")
-    db.delete(db_produit)
-    db.commit()
     return {"detail": "Produit deleted"}
 
 # Route GET pour voir un produit spécifique par son id
 @app.get("/produit/{produit_id}", response_model=ProduitResponse)
-async def read_specific_produit(produit_id: int, db: Session = Depends(get_db)):
-    db_produit = db.query(Produit).filter(Produit.id == produit_id).first()
-    if db_produit is None:
+async def read_specific_produit(produit_id: str):
+    produit = collection.find_one({"_id": ObjectId(produit_id)})
+    if produit is None:
         raise HTTPException(status_code=404, detail="Produit not found")
-    return db_produit
+    produit["id"] = str(produit["_id"])
+    del produit["_id"]
+    return produit
 
 # Route PUT pour mettre à jour un produit par son id
 @app.put("/produits/{produit_id}", response_model=ProduitResponse)
-async def update_produit(produit_id: int, produit: ProduitCreate, request: Request, db: Session = Depends(get_db)):
+async def update_produit(produit_id: str, produit: ProduitCreate, request: Request):
     client_ip = request.client.host
     rate_limiting(client_ip)  # Limiter les tentatives de connexion par adresse IP
 
-    db_produit = db.query(Produit).filter(Produit.id == produit_id).first()
-    if db_produit is None:
+    update_data = produit.dict()
+    result = collection.update_one({"_id": ObjectId(produit_id)}, {"$set": update_data})
+    if result.matched_count == 0:
         raise HTTPException(status_code=404, detail="Produit not found")
 
-    db_produit.name = produit.name
-    db_produit.details = produit.details
-    db_produit.stock = produit.stock
-    db.commit()
-    db.refresh(db_produit)
-    return db_produit
+    produit = collection.find_one({"_id": ObjectId(produit_id)})
+    produit["id"] = str(produit["_id"])
+    del produit["_id"]
+    return produit
