@@ -65,6 +65,12 @@ class ProduitCreate(BaseModel):
     details: str
     stock: int
 
+# Création d'un modèle pydantic pour la mise à jour de produit
+class ProduitUpdate(BaseModel):
+    name: Optional[str]
+    details: Optional[str]
+    stock: Optional[int]
+
 # Création d'un modèle pydantic pour la réponse de produit
 class ProduitResponse(ProduitCreate):
     id: int
@@ -144,4 +150,17 @@ async def read_specific_produit(produit_id: int, db: Session = Depends(get_db)):
     db_produit = db.query(Produit).filter(Produit.id == produit_id).first()
     if db_produit is None:
         raise HTTPException(status_code=404, detail="Produit not found")
+    return db_produit
+
+# Route PUT pour mettre à jour un produit par son id
+@app.put("/produits/{produit_id}", response_model=ProduitResponse)
+async def update_produit(produit_id: int, produit: ProduitUpdate, db: Session = Depends(get_db)):
+    db_produit = db.query(Produit).filter(Produit.id == produit_id).first()
+    if db_produit is None:
+        raise HTTPException(status_code=404, detail="Produit not found")
+    update_data = produit.dict(exclude_unset=True)
+    for key, value in update_data.items():
+        setattr(db_produit, key, value)
+    db.commit()
+    db.refresh(db_produit)
     return db_produit
