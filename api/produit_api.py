@@ -167,3 +167,20 @@ async def read_specific_produit(produit_id: int, db: Session = Depends(get_db)):
     if db_produit is None:
         raise HTTPException(status_code=404, detail="Produit not found")
     return db_produit
+
+# Route PUT pour mettre à jour un produit par son id
+@app.put("/produits/{produit_id}", response_model=ProduitResponse)
+async def update_produit(produit_id: int, produit: ProduitCreate, request: Request, db: Session = Depends(get_db)):
+    client_ip = request.client.host
+    rate_limiting(client_ip)  # Limiter les tentatives de connexion par adresse IP
+
+    db_produit = db.query(Produit).filter(Produit.id == produit_id).first()
+    if db_produit is None:
+        raise HTTPException(status_code=404, detail="Produit not found")
+
+    db_produit.name = produit.name
+    db_produit.details = produit.details
+    db_produit.stock = produit.stock
+    db.commit()
+    db.refresh(db_produit)
+    return db_produit
