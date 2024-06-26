@@ -9,6 +9,7 @@ from sqlalchemy.sql import func
 from prometheus_client import Summary, Counter, generate_latest, CONTENT_TYPE_LATEST
 import pika
 import logging
+from datetime import datetime
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -74,11 +75,13 @@ class ProduitUpdate(BaseModel):
 # Création d'un modèle pydantic pour la réponse de produit
 class ProduitResponse(ProduitCreate):
     id: int
-    createdAt: Optional[DateTime]
+    createdAt: Optional[datetime]
     orderId: Optional[int]
 
     class Config:
         orm_mode = True
+        arbitrary_types_allowed = True  # Permettre les types arbitraires
+
 
 # Définir des métriques Prometheus
 REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
